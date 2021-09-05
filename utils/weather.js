@@ -8,13 +8,13 @@ const weather = (lat, long, callback) => {
     long +
     "&units=f";
 
-  request({ url: url, json: true }, (error, response) => {
+  request({ url, json: true }, (error, { body }) => {
     if (error) {
       callback("Unable to connect to weather service", undefined);
-    } else if (response.body.error) {
+    } else if (body.error) {
       callback("unable to find location.", undefined);
     } else {
-      const data = response.body.current;
+      const data = body.current;
       callback(
         undefined,
         `${data.weather_descriptions[0]}. It is currently ${data.temperature} degrees out.  It feels like ${data.feelslike} degrees out. `
